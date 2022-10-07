@@ -1,2 +1,3 @@
-# terraform-workload-identity-setup-examples
-Example code for bootstrapping trust between Terraform Cloud and cloud providers in order to use TFC's Workload Identity
+# Terraform Workload Identity Setup Examples
+
+Just-in-time authentication is powerful, but the initial setup can be intimidating. This repo contains a collection of example Terraform code for bootstrapping trust between cloud platforms and Terraform Cloud.
