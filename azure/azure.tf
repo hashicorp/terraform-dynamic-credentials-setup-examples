@@ -60,7 +60,7 @@ resource "azuread_application_federated_identity_credential" "tfc_federated_cred
 # workspace will be able to authenticate to Azure for the "apply" run phase.
 #
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential
-resource "azuread_application_federated_identity_credential" "tfc_federated_credential_apply" {
+resource "azuread_application_federated_identity_credential" "tfc_federated_credential_project_apply" {
   application_object_id = azuread_application.tfc_application.object_id
   display_name          = "my-tfc-federated-credential-apply"
   audiences             = [var.tfc_azure_audience]
@@ -73,7 +73,7 @@ resource "azuread_application_federated_identity_credential" "tfc_federated_cred
 # when project information is encoded in the subject.
 #
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential
-resource "azuread_application_federated_identity_credential" "tfc_federated_credential_plan" {
+resource "azuread_application_federated_identity_credential" "tfc_federated_credential_project_plan" {
   application_object_id = azuread_application.tfc_application.object_id
   display_name          = "my-tfc-federated-credential-plan"
   audiences             = [var.tfc_azure_audience]
