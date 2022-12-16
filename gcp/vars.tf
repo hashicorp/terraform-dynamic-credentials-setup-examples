@@ -15,6 +15,12 @@ variable "tfc_organization_name" {
   description = "The name of your Terraform Cloud organization"
 }
 
+variable "tfc_project_name" {
+  type        = string
+  default     = "Default Project"
+  description = "The project under which a workspace will be created"
+}
+
 variable "tfc_workspace_name" {
   type        = string
   default     = "my-gcp-workspace"
