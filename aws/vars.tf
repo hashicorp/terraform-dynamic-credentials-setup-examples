@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 variable "tfc_aws_audience" {
   type        = string
   default     = "aws.workload.identity"
