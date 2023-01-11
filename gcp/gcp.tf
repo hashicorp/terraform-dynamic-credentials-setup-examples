@@ -64,7 +64,12 @@ resource "google_iam_workload_identity_pool_provider" "tfc_provider" {
   }
   oidc {
     issuer_uri        = "https://${var.tfc_hostname}"
-    allowed_audiences = [var.tfc_gcp_audience]
+    # The default audience format used by TFC is of the form:
+    # //iam.googleapis.com/projects/{project number}/locations/global/workloadIdentityPools/{pool ID}/providers/{provider ID}
+    # which matches with the default accepted audience format on GCP.
+    #
+    # Uncomment the line below if you are specifying a custom value for the audience instead of using the default audience.
+    # allowed_audiences = [var.tfc_gcp_audience]
   }
   attribute_condition = "assertion.sub.startsWith(\"${local.non_project_sub_check}\") || assertion.sub.startsWith(\"${local.project_sub_check}\")"
 }
