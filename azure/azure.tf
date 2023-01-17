@@ -43,9 +43,9 @@ resource "azurerm_role_assignment" "tfc_role_assignment" {
 # workspace will be able to authenticate to Azure for the "plan" run phase.
 #
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential
-resource "azuread_application_federated_identity_credential" "tfc_federated_credential_project_plan" {
+resource "azuread_application_federated_identity_credential" "tfc_federated_credential_plan" {
   application_object_id = azuread_application.tfc_application.object_id
-  display_name          = "my-tfc-federated-credential-project-plan"
+  display_name          = "my-tfc-federated-credential-plan"
   audiences             = [var.tfc_azure_audience]
   issuer                = "https://${var.tfc_hostname}"
   subject               = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:plan"
@@ -55,9 +55,9 @@ resource "azuread_application_federated_identity_credential" "tfc_federated_cred
 # workspace will be able to authenticate to Azure for the "apply" run phase.
 #
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential
-resource "azuread_application_federated_identity_credential" "tfc_federated_credential_project_apply" {
+resource "azuread_application_federated_identity_credential" "tfc_federated_credential_apply" {
   application_object_id = azuread_application.tfc_application.object_id
-  display_name          = "my-tfc-federated-credential-project-apply"
+  display_name          = "my-tfc-federated-credential-apply"
   audiences             = [var.tfc_azure_audience]
   issuer                = "https://${var.tfc_hostname}"
   subject               = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:apply"
