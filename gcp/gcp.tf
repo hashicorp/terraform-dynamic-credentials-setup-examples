@@ -11,14 +11,6 @@ provider "google-beta" {
   region  = "global"
 }
 
-# Adds support for subjects with project information, and for subjects without project information.
-# All subject values in the future will include project information so this is a future proofing step
-# for users who are not yet using projects, and required for users who are.
-locals {
-  non_project_sub_check = "organization:${var.tfc_organization_name}:workspace:${var.tfc_workspace_name}"
-  project_sub_check = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}"
-}
-
 # Data source used to get the project number programmatically.
 #
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project
@@ -71,7 +63,7 @@ resource "google_iam_workload_identity_pool_provider" "tfc_provider" {
     # Uncomment the line below if you are specifying a custom value for the audience instead of using the default audience.
     # allowed_audiences = [var.tfc_gcp_audience]
   }
-  attribute_condition = "assertion.sub.startsWith(\"${local.non_project_sub_check}\") || assertion.sub.startsWith(\"${local.project_sub_check}\")"
+  attribute_condition = "assertion.sub.startsWith(\"organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}\")"
 }
 
 # Creates a service account that will be used for authenticating to GCP.
