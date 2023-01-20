@@ -47,6 +47,8 @@ resource "google_iam_workload_identity_pool_provider" "tfc_provider" {
     "google.subject"                        = "assertion.sub",
     "attribute.aud"                         = "assertion.aud",
     "attribute.terraform_run_phase"         = "assertion.terraform_run_phase",
+    "attribute.terraform_project_id"        = "assertion.terraform_project_id",
+    "attribute.terraform_project_name"      = "assertion.terraform_project_name",
     "attribute.terraform_workspace_id"      = "assertion.terraform_workspace_id",
     "attribute.terraform_workspace_name"    = "assertion.terraform_workspace_name",
     "attribute.terraform_organization_id"   = "assertion.terraform_organization_id",
