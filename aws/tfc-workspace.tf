@@ -9,8 +9,15 @@ provider "tfe" {
 # to AWS with the permissions set in the AWS policy.
 #
 # https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/workspace
-resource "tfe_workspace" "my_workspace" {
-  name         = var.tfc_workspace_name
+# resource "tfe_workspace" "my_workspace" {
+#   name         = var.tfc_workspace_name
+#   organization = var.tfc_organization_name
+# }
+
+resource "tfe_variable_set" "tfe_var_set" {
+  name         = "AWS Cloud dynamic credentials"
+  description  = "AWS dynamic credentials applied to all workspaces."
+  global       = true
   organization = var.tfc_organization_name
 }
 
@@ -19,7 +26,7 @@ resource "tfe_workspace" "my_workspace" {
 #
 # https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable
 resource "tfe_variable" "enable_aws_provider_auth" {
-  workspace_id = tfe_workspace.my_workspace.id
+  variable_set_id = tfe_variable_set.tfe_var_set.id
 
   key      = "TFC_AWS_PROVIDER_AUTH"
   value    = "true"
@@ -29,7 +36,7 @@ resource "tfe_variable" "enable_aws_provider_auth" {
 }
 
 resource "tfe_variable" "tfc_aws_role_arn" {
-  workspace_id = tfe_workspace.my_workspace.id
+  variable_set_id = tfe_variable_set.tfe_var_set.id
 
   key      = "TFC_AWS_RUN_ROLE_ARN"
   value    = aws_iam_role.tfc_role.arn

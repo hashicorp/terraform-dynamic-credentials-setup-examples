@@ -24,8 +24,8 @@ variable "tfc_project_name" {
   description = "The project under which a workspace will be created"
 }
 
-variable "tfc_workspace_name" {
-  type        = string
-  default     = "my-aws-workspace"
-  description = "The name of the workspace that you'd like to create and connect to AWS"
-}
+# variable "tfc_workspace_name" {
+#   type        = string
+#   default     = "my-aws-workspace"
+#   description = "The name of the workspace that you'd like to create and connect to AWS"
+# }

@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 provider "aws" {
+  region = "us-west-1"
 }
 
 # Data source used to grab the TLS certificate for Terraform Cloud.
@@ -42,7 +43,7 @@ resource "aws_iam_role" "tfc_role" {
          "app.terraform.io:aud": "${one(aws_iam_openid_connect_provider.tfc_provider.client_id_list)}"
        },
        "StringLike": {
-         "app.terraform.io:sub": "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:*"
+         "app.terraform.io:sub": "organization:${var.tfc_organization_name}:project:*:workspace:*:run_phase:*"
        }
      }
    }
@@ -66,7 +67,8 @@ resource "aws_iam_policy" "tfc_policy" {
    {
      "Effect": "Allow",
      "Action": [
-       "s3:ListBucket"
+       "ec2:*",
+       "s3:*"
      ],
      "Resource": "*"
    }
