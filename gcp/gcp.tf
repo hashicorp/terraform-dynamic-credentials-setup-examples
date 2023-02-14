@@ -31,7 +31,7 @@ resource "google_project_service" "services" {
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iam_workload_identity_pool
 resource "google_iam_workload_identity_pool" "tfc_pool" {
   provider                  = google-beta
-  workload_identity_pool_id = "my-tfc-pool"
+  workload_identity_pool_id = "tfc-pool"
 }
 
 # Creates an identity pool provider which uses an attribute condition
@@ -42,17 +42,12 @@ resource "google_iam_workload_identity_pool" "tfc_pool" {
 resource "google_iam_workload_identity_pool_provider" "tfc_provider" {
   provider                           = google-beta
   workload_identity_pool_id          = google_iam_workload_identity_pool.tfc_pool.workload_identity_pool_id
-  workload_identity_pool_provider_id = "my-tfc-provider-id"
+  workload_identity_pool_provider_id = "tfc-provider-id"
   attribute_mapping = {
     "google.subject"                        = "assertion.sub",
     "attribute.aud"                         = "assertion.aud",
-    "attribute.terraform_run_phase"         = "assertion.terraform_run_phase",
-    "attribute.terraform_workspace_id"      = "assertion.terraform_workspace_id",
-    "attribute.terraform_workspace_name"    = "assertion.terraform_workspace_name",
     "attribute.terraform_organization_id"   = "assertion.terraform_organization_id",
     "attribute.terraform_organization_name" = "assertion.terraform_organization_name",
-    "attribute.terraform_run_id"            = "assertion.terraform_run_id",
-    "attribute.terraform_full_workspace"    = "assertion.terraform_full_workspace",
   }
   oidc {
     issuer_uri        = "https://${var.tfc_hostname}"
@@ -63,7 +58,7 @@ resource "google_iam_workload_identity_pool_provider" "tfc_provider" {
     # Uncomment the line below if you are specifying a custom value for the audience instead of using the default audience.
     # allowed_audiences = [var.tfc_gcp_audience]
   }
-  attribute_condition = "assertion.sub.startsWith(\"organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}\")"
+  attribute_condition = "assertion.sub.startsWith(\"organization:${var.tfc_organization_name}\")"
 }
 
 # Creates a service account that will be used for authenticating to GCP.

@@ -18,17 +18,17 @@ variable "tfc_organization_name" {
   description = "The name of your Terraform Cloud organization"
 }
 
-variable "tfc_project_name" {
-  type        = string
-  default     = "Default Project"
-  description = "The project under which a workspace will be created"
-}
+# variable "tfc_project_name" {
+#   type        = string
+#   default     = "Default Project"
+#   description = "The project under which a workspace will be created"
+# }
 
-variable "tfc_workspace_name" {
-  type        = string
-  default     = "my-gcp-workspace"
-  description = "The name of the workspace that you'd like to create and connect to GCP"
-}
+# variable "tfc_workspace_name" {
+#   type        = string
+#   default     = "my-gcp-workspace"
+#   description = "The name of the workspace that you'd like to create and connect to GCP"
+# }
 
 variable "gcp_project_id" {
   type        = string
@@ -42,6 +42,12 @@ variable "gcp_service_list" {
     "iam.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "sts.googleapis.com",
-    "iamcredentials.googleapis.com"
+    "iamcredentials.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "pubsub.googleapis.com",
+    "container.googleapis.com",
+    "deploymentmanager.googleapis.com",
+    "compute.googleapis.com",
+    "sql-component.googleapis.com"
   ]
 }
