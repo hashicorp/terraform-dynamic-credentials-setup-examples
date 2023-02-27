@@ -12,7 +12,7 @@ provider "tfe" {
 resource "tfe_workspace" "my_workspace" {
   name         = var.tfc_workspace_name
   organization = var.tfc_organization_name
-  project_id   = var.tfc_project_name
+  project_id   = var.tfc_project_id
 }
 
 # The following variables must be set to allow runs
