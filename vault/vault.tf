@@ -14,6 +14,11 @@ resource "vault_jwt_auth_backend" "tfc_jwt" {
   type               = "jwt"
   oidc_discovery_url = "https://${var.tfc_hostname}"
   bound_issuer       = "https://${var.tfc_hostname}"
+
+  # If you are using TFE with custom / self-signed CA certs you may need to provide them via the
+  # below argument as a string in PEM format.
+  #
+  # oidc_discovery_ca_pem = "my CA certs as PEM"
 }
 
 # Creates a role for the jwt auth backend and uses bound claims
