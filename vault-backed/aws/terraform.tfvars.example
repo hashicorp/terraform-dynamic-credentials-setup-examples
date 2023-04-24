@@ -1,0 +1,7 @@
+aws_secret_backend_role_name = "edu-app"
+
+tfc_hostname = "app.terraform.io"
+tfc_organization_name = "vault-backed-dynamic-creds-testing"
+tfc_workspace_name = "vault-backed-aws-auth"
+
+vault_url = "https://my-secret-engine-public-vault-aabb334d.4efg6789.xd.hashicorp.cloud:8200"
