@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 # Data source used to get the project id programmatically.
 #
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project
