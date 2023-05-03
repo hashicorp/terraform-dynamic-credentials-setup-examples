@@ -28,35 +28,55 @@ resource "tfe_variable" "enable_gcp_provider_auth" {
   description = "Enable the Workload Identity integration for GCP."
 }
 
-resource "tfe_variable" "tfc_gcp_project_number" {
+# The provider name contains the project number, pool ID,
+# and provider ID. This information can be supplied using
+# this TFC_GCP_WORKLOAD_PROVIDER_NAME variable, or using
+# the separate TFC_GCP_PROJECT_NUMBER, TFC_GCP_WORKLOAD_POOL_ID,
+# and TFC_GCP_WORKLOAD_PROVIDER_ID variables below if desired.
+#
+resource "tfe_variable" "tfc_gcp_workload_provider_name" {
   workspace_id = tfe_workspace.my_workspace.id
 
-  key      = "TFC_GCP_PROJECT_NUMBER"
-  value    = data.google_project.project.number
+  key      = "TFC_GCP_WORKLOAD_PROVIDER_NAME"
+  value    =  google_iam_workload_identity_pool_provider.tfc_provider.name
   category = "env"
 
-  description = "The numeric identifier of the GCP project"
+  description = "The workload provider name to authenticate against."
 }
 
-resource "tfe_variable" "tfc_gcp_workload_pool_id" {
-  workspace_id = tfe_workspace.my_workspace.id
+# Uncomment the following variables and comment out
+# tfc_gcp_workload_provider_name if you wish to supply this
+# information in separate variables instead!
 
-  key      = "TFC_GCP_WORKLOAD_POOL_ID"
-  value    = google_iam_workload_identity_pool.tfc_pool.workload_identity_pool_id
-  category = "env"
+# resource "tfe_variable" "tfc_gcp_project_number" {
+#   workspace_id = tfe_workspace.my_workspace.id
 
-  description = "The ID of the workload identity pool."
-}
+#   key      = "TFC_GCP_PROJECT_NUMBER"
+#   value    = data.google_project.project.number
+#   category = "env"
 
-resource "tfe_variable" "tfc_gcp_workload_provider_id" {
-  workspace_id = tfe_workspace.my_workspace.id
+#   description = "The numeric identifier of the GCP project"
+# }
 
-  key      = "TFC_GCP_WORKLOAD_PROVIDER_ID"
-  value    = google_iam_workload_identity_pool_provider.tfc_provider.workload_identity_pool_provider_id
-  category = "env"
+# resource "tfe_variable" "tfc_gcp_workload_pool_id" {
+#   workspace_id = tfe_workspace.my_workspace.id
 
-  description = "The ID of the workload identity pool provider."
-}
+#   key      = "TFC_GCP_WORKLOAD_POOL_ID"
+#   value    = google_iam_workload_identity_pool.tfc_pool.workload_identity_pool_id
+#   category = "env"
+
+#   description = "The ID of the workload identity pool."
+# }
+
+# resource "tfe_variable" "tfc_gcp_workload_provider_id" {
+#   workspace_id = tfe_workspace.my_workspace.id
+
+#   key      = "TFC_GCP_WORKLOAD_PROVIDER_ID"
+#   value    = google_iam_workload_identity_pool_provider.tfc_provider.workload_identity_pool_provider_id
+#   category = "env"
+
+#   description = "The ID of the workload identity pool provider."
+# }
 
 resource "tfe_variable" "tfc_gcp_service_account_email" {
   workspace_id = tfe_workspace.my_workspace.id
