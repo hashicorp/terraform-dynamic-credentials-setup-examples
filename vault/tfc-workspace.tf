@@ -80,3 +80,16 @@ resource "tfe_variable" "tfc_vault_role" {
 
 #   description = "The value to use as the audience claim in run identity tokens"
 # }
+
+# resource "tfe_variable" "tfc_vault_encoded_cacert" {
+#   workspace_id = tfe_workspace.my_workspace.id
+
+#   key = "TFC_VAULT_ENCODED_CACERT"
+
+#   # Replace this with the name and path to your certificate
+#   value     = filebase64("${path.module}/my-cacert.cer")
+#   category  = "env"
+#   sensitive = true
+
+#   description = "A Base64 encoded CA certificate to use when authenticating with Vault"
+# }
