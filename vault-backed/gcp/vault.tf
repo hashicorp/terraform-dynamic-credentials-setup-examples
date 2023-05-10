@@ -80,6 +80,11 @@ resource "vault_gcp_secret_backend" "gcp_secret_backend" {
   # WARNING - These values will be written in plaintext in the statefiles for this configuration. 
   # Protect the statefiles for this configuration accordingly!
   credentials = base64decode(google_service_account_key.secrets_engine_key.private_key)
+
+  depends_on = [
+    google_service_account.secrets_engine,
+    google_project_iam_member.secrets_engine
+  ]
 }
 
 # 
@@ -89,14 +94,19 @@ resource "vault_gcp_secret_roleset" "gcp_secret_roleset" {
   backend      = vault_gcp_secret_backend.gcp_secret_backend.path
   roleset      = "project_viewer"
   secret_type  = "access_token"
-  project      = data.google_project.current.project_id
+  project      = var.gcp_project_id
   token_scopes = ["https://www.googleapis.com/auth/cloud-platform"]
 
   binding {
-    resource = "//cloudresourcemanager.googleapis.com/projects/${data.google_project.current.project_id}"
+    resource = "//cloudresourcemanager.googleapis.com/projects/${var.gcp_project_id}"
 
     roles = [
       "roles/viewer",
     ]
   }
+
+  depends_on = [
+    google_service_account.secrets_engine,
+    google_project_iam_member.secrets_engine
+  ]
 }
