@@ -6,7 +6,7 @@ provider "tfe" {
 }
 
 # Runs in this workspace will be automatically authenticated
-# to Azure with the permissions set in the Azure policy. TODO: che k if wording right
+# to Azure with the permissions set in the Azure policy.
 #
 # https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/workspace
 resource "tfe_workspace" "my_workspace" {
@@ -15,7 +15,7 @@ resource "tfe_workspace" "my_workspace" {
 }
 
 # The following variables must be set to allow runs
-# to authenticate to Azyre.
+# to authenticate to Azure.
 #
 # https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable
 resource "tfe_variable" "enable_azure_provider_auth" {
