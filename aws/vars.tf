@@ -16,6 +16,7 @@ variable "tfc_hostname" {
 variable "tfc_organization_name" {
   type        = string
   description = "The name of your Terraform Cloud organization"
+  default = "learning-565"
 }
 
 variable "tfc_project_name" {
