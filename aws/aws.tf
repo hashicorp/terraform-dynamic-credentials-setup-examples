@@ -51,6 +51,7 @@ resource "aws_iam_role" "tfc_role" {
 EOF
 }
 
+
 # Creates a policy that will be used to define the permissions that
 # the previously created role has within AWS.
 #
