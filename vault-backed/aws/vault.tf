@@ -88,8 +88,8 @@ resource "vault_aws_secret_backend" "aws_secret_backend" {
 #
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/aws_secret_backend_role
 resource "vault_aws_secret_backend_role" "aws_secret_backend_role" {
-  backend = vault_aws_secret_backend.aws_secret_backend.path
-  name    = var.aws_secret_backend_role_name
+  backend         = vault_aws_secret_backend.aws_secret_backend.path
+  name            = var.aws_secret_backend_role_name
   credential_type = "assumed_role"
 
   role_arns = [aws_iam_role.tfc_role.arn]
