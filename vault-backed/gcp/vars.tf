@@ -50,3 +50,8 @@ variable "tfc_vault_audience" {
   default     = "vault.workload.identity"
   description = "The audience value to use in run identity tokens"
 }
+
+variable "gcp_project_id" {
+  type        = string
+  description = "The ID for your GCP project"
+}
