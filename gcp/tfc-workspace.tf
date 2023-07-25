@@ -38,7 +38,7 @@ resource "tfe_variable" "tfc_gcp_workload_provider_name" {
   workspace_id = tfe_workspace.my_workspace.id
 
   key      = "TFC_GCP_WORKLOAD_PROVIDER_NAME"
-  value    =  google_iam_workload_identity_pool_provider.tfc_provider.name
+  value    = google_iam_workload_identity_pool_provider.tfc_provider.name
   category = "env"
 
   description = "The workload provider name to authenticate against."
