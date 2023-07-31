@@ -130,3 +130,28 @@ resource "tfe_variable" "tfc_aws_run_vault_role" {
 
 #   description = "The value to use as the audience claim in run identity tokens"
 # }
+
+# The following is an example of the naming format used to define variables for
+# additional configurations. Additional required configuration values must also
+# be supplied in this same format, as well as any desired optional configuration
+# values.
+#
+# Additional configurations can be used to uniquely authenticate multiple aliases
+# of the same provider in a workspace, with different roles/permissions in different
+# accounts or regions.
+#
+# See https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations
+# for more details on specifying multiple configurations.
+#
+# See https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed/aws-configuration#specifying-multiple-configurations
+# for specific requirements and details for Vault-backed AWS.
+
+# resource "tfe_variable" "enable_aws_provider_auth_other_config" {
+#   workspace_id = tfe_workspace.my_workspace.id
+
+#   key      = "TFC_VAULT_BACKED_AWS_AUTH_other_config"
+#   value    = "true"
+#   category = "env"
+
+#   description = "Enable the Vault Secrets Engine integration for AWS for an additional configuration named other_config."
+# }

@@ -93,3 +93,28 @@ resource "tfe_variable" "tfc_vault_role" {
 
 #   description = "A Base64 encoded CA certificate to use when authenticating with Vault"
 # }
+
+# The following is an example of the naming format used to define variables for
+# additional configurations. Additional required configuration values must also
+# be supplied in this same format, as well as any desired optional configuration
+# values.
+#
+# Additional configurations can be used to uniquely authenticate multiple aliases
+# of the same provider in a workspace, with different roles/permissions in different
+# accounts or regions.
+#
+# See https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations
+# for more details on specifying multiple configurations.
+#
+# See https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration#specifying-multiple-configurations
+# for specific requirements and details for the Vault provider.
+
+# resource "tfe_variable" "enable_vault_provider_auth_other_config" {
+#   workspace_id = tfe_workspace.my_workspace.id
+
+#   key      = "TFC_VAULT_PROVIDER_AUTH_other_config"
+#   value    = "true"
+#   category = "env"
+
+#   description = "Enable the Workload Identity integration for Vault for an additional configuration named other_config."
+# }
