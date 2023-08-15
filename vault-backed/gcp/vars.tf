@@ -45,6 +45,12 @@ variable "vault_namespace" {
   description = "The namespace of the Vault instance you'd like to create the GCP and jwt auth backends in"
 }
 
+variable "vault_base_namespace" {
+  type        = string
+  default     = null
+  description = "The base namespace of the Vault instance. For HCP Vault this should be admin"
+}
+
 variable "tfc_vault_audience" {
   type        = string
   default     = "vault.workload.identity"

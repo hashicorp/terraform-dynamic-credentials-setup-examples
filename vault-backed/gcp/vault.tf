@@ -10,6 +10,7 @@ provider "vault" {
 #
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/jwt_auth_backend
 resource "vault_jwt_auth_backend" "tfc_jwt" {
+  namespace      = var.vault_namespace
   path               = var.jwt_backend_path
   type               = "jwt"
   oidc_discovery_url = "https://${var.tfc_hostname}"
@@ -43,6 +44,7 @@ resource "vault_jwt_auth_backend_role" "tfc_role" {
 #
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy
 resource "vault_policy" "tfc_policy" {
+  namespace = var.vault_namespace
   name = "tfc-policy"
 
   policy = <<EOT
@@ -91,8 +93,9 @@ resource "vault_gcp_secret_backend" "gcp_secret_backend" {
 #
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/gcp_secret_roleset
 resource "vault_gcp_secret_roleset" "gcp_secret_roleset" {
+  namespace    = var.vault_namespace
   backend      = vault_gcp_secret_backend.gcp_secret_backend.path
-  roleset      = "project_viewer"
+  roleset      = "project_editor"
   secret_type  = "access_token"
   project      = var.gcp_project_id
   token_scopes = ["https://www.googleapis.com/auth/cloud-platform"]
@@ -101,7 +104,7 @@ resource "vault_gcp_secret_roleset" "gcp_secret_roleset" {
     resource = "//cloudresourcemanager.googleapis.com/projects/${var.gcp_project_id}"
 
     roles = [
-      "roles/viewer",
+      "roles/editor",
     ]
   }
 

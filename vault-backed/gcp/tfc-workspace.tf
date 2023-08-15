@@ -5,6 +5,11 @@ provider "tfe" {
   hostname = var.tfc_hostname
 }
 
+data "tfe_project" "this" {
+  name = var.tfc_project_name
+  organization = var.tfc_organization_name
+}
+
 # Runs in this workspace will be automatically authenticated
 # to Vault with the permissions set in the Vault policy.
 #
@@ -12,6 +17,7 @@ provider "tfe" {
 resource "tfe_workspace" "my_workspace" {
   name         = var.tfc_workspace_name
   organization = var.tfc_organization_name
+  project_id   = data.tfe_project.this.id
 }
 
 # The following variables must be set to allow runs
@@ -53,7 +59,8 @@ resource "tfe_variable" "tfc_vault_namespace" {
   workspace_id = tfe_workspace.my_workspace.id
 
   key      = "TFC_VAULT_NAMESPACE"
-  value    = var.vault_namespace
+  # value    = "admin/${var.vault_namespace}"
+  value    = join("/", compact([var.vault_base_namespace, var.vault_namespace]))
   category = "env"
 
   description = "Namespace that contains the GCP Secrets Engine."
