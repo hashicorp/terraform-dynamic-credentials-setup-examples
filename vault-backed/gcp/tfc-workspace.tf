@@ -6,7 +6,7 @@ provider "tfe" {
 }
 
 data "tfe_project" "this" {
-  name = var.tfc_project_name
+  name         = var.tfc_project_name
   organization = var.tfc_organization_name
 }
 
@@ -58,7 +58,7 @@ resource "tfe_variable" "tfc_vault_role" {
 resource "tfe_variable" "tfc_vault_namespace" {
   workspace_id = tfe_workspace.my_workspace.id
 
-  key      = "TFC_VAULT_NAMESPACE"
+  key = "TFC_VAULT_NAMESPACE"
   # value    = "admin/${var.vault_namespace}"
   value    = join("/", compact([var.vault_base_namespace, var.vault_namespace]))
   category = "env"

@@ -10,7 +10,7 @@ provider "vault" {
 #
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/jwt_auth_backend
 resource "vault_jwt_auth_backend" "tfc_jwt" {
-  namespace      = var.vault_namespace
+  namespace          = var.vault_namespace
   path               = var.jwt_backend_path
   type               = "jwt"
   oidc_discovery_url = "https://${var.tfc_hostname}"
@@ -45,7 +45,7 @@ resource "vault_jwt_auth_backend_role" "tfc_role" {
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy
 resource "vault_policy" "tfc_policy" {
   namespace = var.vault_namespace
-  name = "tfc-policy"
+  name      = "tfc-policy"
 
   policy = <<EOT
 # Allow tokens to query themselves
