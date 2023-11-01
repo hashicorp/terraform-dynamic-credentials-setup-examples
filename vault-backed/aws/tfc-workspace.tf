@@ -9,7 +9,7 @@ provider "tfe" {
 #
 # https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/project
 data "tfe_project" "tfc_project" {
-  name = var.tfc_project_name
+  name         = var.tfc_project_name
   organization = var.tfc_organization_name
 }
 
