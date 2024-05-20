@@ -50,12 +50,12 @@ resource "tfe_variable" "tfc_hcp_provider_resource_name" {
 }
 
 # The value to use as the `aud` claim in run identity tokens
- resource "tfe_variable" "tfc_hcp_audience" {
-   workspace_id = tfe_workspace.my_workspace.id
+resource "tfe_variable" "tfc_hcp_audience" {
+  workspace_id = tfe_workspace.my_workspace.id
 
-   key      = "TFC_HCP_WORKLOAD_IDENTITY_AUDIENCE"
-   value    = var.tfc_hcp_audience
-   category = "env"
+  key      = "TFC_HCP_WORKLOAD_IDENTITY_AUDIENCE"
+  value    = var.tfc_hcp_audience
+  category = "env"
 
-   description = "The value to use as the audience claim in run identity tokens"
- }
+  description = "The value to use as the audience claim in run identity tokens"
+}

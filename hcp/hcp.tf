@@ -13,7 +13,7 @@ data "hcp_project" "hcp_project" {
 #
 # https://registry.terraform.io/providers/hashicorp/hcp/latest/docs/resources/service_principal
 resource "hcp_service_principal" "workload_sp" {
-  name = "hcp-terraform"
+  name   = "hcp-terraform"
   parent = data.hcp_project.hcp_project.resource_name
 }
 
@@ -39,7 +39,7 @@ resource "hcp_iam_workload_identity_provider" "tfc" {
   description       = "Allow HCP Terraform agents to act as the ${hcp_service_principal.workload_sp.name} service principal"
 
   oidc = {
-    issuer_uri = "https://${var.tfc_hostname}"
+    issuer_uri        = "https://${var.tfc_hostname}"
     allowed_audiences = [var.tfc_hcp_audience]
   }
 
