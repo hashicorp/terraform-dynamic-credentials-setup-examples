@@ -80,7 +80,11 @@ resource "aws_iam_access_key" "secrets_engine_credentials" {
 }
 
 
-# Provides an IAM policy attached to a user. In this case, allowing the secrets_engine user to assume other roles via STS
+# Provides an IAM policy attached to a user. In this case, allowing the secrets_engine user rotate its own access key
+#
+# https://developer.hashicorp.com/vault/api-docs/secret/aws#rotate-root-iam-credentials
+#
+# Note that if the credentials are rotated, there will be drift in this Terraform configuration
 #
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy
 resource "aws_iam_user_policy" "vault_secrets_engine_generate_credentials" {
@@ -92,10 +96,13 @@ resource "aws_iam_user_policy" "vault_secrets_engine_generate_credentials" {
     Statement = [
       {
         Action = [
-          "sts:AssumeRole",
+          "iam:GetUser",
+          "iam:CreateAccessKey",
+          "iam:DeleteAccessKey",
+          "iam:ListAccessKeys"
         ]
         Effect   = "Allow"
-        Resource = "${aws_iam_role.tfc_role.arn}"
+        Resource = aws_iam_user.secrets_engine.arn
       },
     ]
   })

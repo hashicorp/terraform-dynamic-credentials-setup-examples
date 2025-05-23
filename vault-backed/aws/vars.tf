@@ -37,7 +37,7 @@ variable "tfc_workspace_name" {
 
 variable "vault_url" {
   type        = string
-  description = "The URL of the Vault instance you'd like to use with Terraform Cloud"
+  description = "The URL of the Vault instance you'd like to use with Terraform Cloud. Can also be set via VAULT_ADDR environment variable."
 }
 
 variable "jwt_backend_path" {

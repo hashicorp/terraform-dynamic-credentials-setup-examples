@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 provider "vault" {
-  address = var.vault_url
+  # address = var.vault_url
 }
 
 # Enables the jwt auth backend in Vault at the given path,
@@ -10,6 +10,7 @@ provider "vault" {
 #
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/jwt_auth_backend
 resource "vault_jwt_auth_backend" "tfc_jwt" {
+  namespace          = var.vault_namespace
   path               = var.jwt_backend_path
   type               = "jwt"
   oidc_discovery_url = "https://${var.tfc_hostname}"
@@ -43,7 +44,8 @@ resource "vault_jwt_auth_backend_role" "tfc_role" {
 #
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy
 resource "vault_policy" "tfc_policy" {
-  name = "tfc-policy"
+  namespace = var.vault_namespace
+  name      = "tfc-policy"
 
   policy = <<EOT
 # Allow tokens to query themselves
@@ -88,6 +90,7 @@ resource "vault_aws_secret_backend" "aws_secret_backend" {
 #
 # https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/aws_secret_backend_role
 resource "vault_aws_secret_backend_role" "aws_secret_backend_role" {
+  namespace       = var.vault_namespace
   backend         = vault_aws_secret_backend.aws_secret_backend.path
   name            = var.aws_secret_backend_role_name
   credential_type = "assumed_role"
