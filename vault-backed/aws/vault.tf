@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 provider "vault" {
-  # address = var.vault_url
+  address = var.vault_url
 }
 
 # Enables the jwt auth backend in Vault at the given path,
