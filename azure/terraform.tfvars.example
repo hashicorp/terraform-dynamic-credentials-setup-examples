@@ -1,1 +1,4 @@
-tfc_organization_name = "my-organization"
+tfc_organization_name = "<my_organization>"
+az_subscription_id    = "<my_azure_subscription_id>"
+tfc_token             = "<my_tfc_token>"
+tfc_hostname          = "<my_tfc_hostname>"
