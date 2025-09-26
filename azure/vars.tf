@@ -29,3 +29,13 @@ variable "tfc_workspace_name" {
   default     = "my-azure-workspace"
   description = "The name of the workspace that you'd like to create and connect to Azure"
 }
+
+variable "az_subscription_id" {
+  type        = string
+  description = "Azure Subscription ID where resources will be created"
+}
+
+variable "tfc_token" {
+  type        = string
+  description = "Terraform Cloud API token"
+}
