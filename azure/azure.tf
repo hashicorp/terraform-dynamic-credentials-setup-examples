@@ -12,6 +12,16 @@ data "azuread_client_config" "current" {}
 data "azurerm_subscription" "current" {
 }
 
+# Fetches the Entra ID Application Administrator role object ID.
+data "azuread_directory_role_templates" "all_roles" {}
+
+locals {
+  app_admin_role_id = one([
+    for role in data.azuread_directory_role_templates.all_roles.role_templates : role.object_id
+    if role.display_name == "Application Administrator"
+  ])
+}
+
 # Creates an application registration within Azure Active Directory.
 #
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application
@@ -25,7 +35,6 @@ resource "azuread_application" "tfc_application" {
 #
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal
 resource "azuread_service_principal" "tfc_service_principal" {
-  # application_id = azuread_application.tfc_application.application_id
   client_id = azuread_application.tfc_application.client_id
 }
 
@@ -33,10 +42,35 @@ resource "azuread_service_principal" "tfc_service_principal" {
 # principal has within the Azure subscription.
 #
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment
-resource "azurerm_role_assignment" "tfc_role_assignment" {
+resource "azurerm_role_assignment" "tfc_contributor_role_assignment" {
   scope                = data.azurerm_subscription.current.id
   principal_id         = azuread_service_principal.tfc_service_principal.object_id
   role_definition_name = "Contributor"
+}
+
+# Creates a role assignment to allow the service principal to assign roles to resources it creates.
+# This is required when Terraform provisions resources that need their own role assignments,
+# such as managed identities, storage accounts, or service principals.
+#
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment
+resource "azurerm_role_assignment" "tfc_rbac_role_assignment" {
+  scope                            = data.azurerm_subscription.current.id
+  principal_id                     = azuread_service_principal.tfc_service_principal.object_id
+  role_definition_name             = "Role Based Access Control Administrator"
+  skip_service_principal_aad_check = true
+}
+
+# Assigns the service principal an Entra ID directory role to allow it to manage application registrations
+# and service principals. 
+# This is required when Terraform needs to create or manage Entra ID applications and service principals.
+#
+# https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/directory_role_assignment
+resource "azuread_directory_role_assignment" "tfc_app_admin_role_assignment" {
+  # The role is assigned at the tenant/directory level, so the scope is the root directory - '/'
+  # This argument defaults to '/' if omitted, but it is good practice to include it for clarity.
+  directory_scope_id  = "/"
+  principal_object_id = azuread_service_principal.tfc_service_principal.object_id
+  role_id             = local.app_admin_role_id
 }
 
 # Creates a federated identity credential which ensures that the given
