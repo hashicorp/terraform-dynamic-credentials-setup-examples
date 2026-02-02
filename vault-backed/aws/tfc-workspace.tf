@@ -164,3 +164,13 @@ resource "tfe_variable" "tfc_aws_run_vault_role" {
 
 #   description = "Enable the Vault Secrets Engine integration for AWS for an additional configuration named other_config."
 # }
+
+# resource "tfe_variable" "tfc_vault_client_timeout" {
+#   workspace_id = tfe_workspace.my_workspace.id
+
+#   key      = "TFC_VAULT_CLIENT_TIMEOUT"
+#   value    = var.tfc_vault_client_timeout
+#   category = "env"
+
+#   description = "The timeout in seconds for vault client"
+# }
