@@ -140,6 +140,16 @@ resource "tfe_variable" "tfc_aws_run_vault_role" {
 #   description = "The value to use as the audience claim in run identity tokens"
 # }
 
+# resource "tfe_variable" "tfc_vault_client_timeout" {
+#   workspace_id = tfe_workspace.my_workspace.id
+
+#   key      = "TFC_VAULT_CLIENT_TIMEOUT"
+#   value    = var.tfc_vault_client_timeout
+#   category = "env"
+
+#   description = "The timeout in seconds for vault client"
+# }
+
 # The following is an example of the naming format used to define variables for
 # additional configurations. Additional required configuration values must also
 # be supplied in this same format, as well as any desired optional configuration
