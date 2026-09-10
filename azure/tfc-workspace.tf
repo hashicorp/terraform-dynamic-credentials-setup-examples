@@ -1,10 +1,6 @@
 # Copyright IBM Corp. 2022, 2025
 # SPDX-License-Identifier: MPL-2.0
 
-provider "tfe" {
-  hostname = var.tfc_hostname
-}
-
 # Data source used to grab the project under which a workspace will be created.
 #
 # https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/project
@@ -41,7 +37,7 @@ resource "tfe_variable" "tfc_azure_client_id" {
   workspace_id = tfe_workspace.my_workspace.id
 
   key      = "TFC_AZURE_RUN_CLIENT_ID"
-  value    = azuread_application.tfc_application.application_id
+  value    = azuread_application.tfc_application.client_id
   category = "env"
 
   description = "The Azure Client ID runs will use to authenticate."
